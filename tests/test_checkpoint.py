@@ -9,7 +9,7 @@ from pytorch_lightning.core.saving import _load_state
 from nn_core.serialization import NNCheckpointIO
 from tests.conftest import load_checkpoint
 
-from mvtsf.pl_modules.pl_module import MyLightningModule
+from mvtsf.pl_modules.pl_module import PLModule
 from mvtsf.run import run
 
 
@@ -49,7 +49,7 @@ def test_cfg_in_checkpoint(run_trainings_not_dry: str, cfg_all_not_dry: DictConf
     _check_run_path_in_checkpoint(checkpoint)
 
 
-class ModuleWithCustomCheckpoint(MyLightningModule):
+class ModuleWithCustomCheckpoint(PLModule):
     def on_save_checkpoint(self, checkpoint: Dict[str, Any]) -> None:
         checkpoint["test_key"] = "test_value"
 
