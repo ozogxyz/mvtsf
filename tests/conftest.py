@@ -9,7 +9,7 @@ from hydra import compose, initialize
 from hydra.core.hydra_config import HydraConfig
 from omegaconf import DictConfig, OmegaConf, open_dict
 from pytest import FixtureRequest, TempPathFactory
-from pytorch_lightning import seed_everything
+# from pytorch_lightning import seed_everything
 
 from nn_core.serialization import NNCheckpointIO
 
@@ -17,7 +17,7 @@ from mvtsf.run import run
 
 logging.basicConfig(force=True, level=logging.DEBUG)
 
-seed_everything(42)
+# seed_everything(42)
 
 TRAIN_MAX_NSTEPS = 1
 
@@ -29,7 +29,7 @@ TRAIN_MAX_NSTEPS = 1
 def cfg(tmp_path_factory: TempPathFactory) -> DictConfig:
     test_cfg_tmpdir = tmp_path_factory.mktemp("test_train_tmpdir")
 
-    with initialize(config_path="../conf"):
+    with initialize(version_base=None, config_path="../conf"):
         cfg = compose(config_name="default", return_hydra_config=True)
         HydraConfig().set_config(cfg)
 

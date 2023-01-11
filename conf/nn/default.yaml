@@ -1,15 +1,14 @@
 data:
-  _target_: mvtsf.data.datamodule.MyDataModule
+  _target_: mvtsf.data.datamodule.CMAPSSDataModule
 
-  datasets:
-    train:
-      _target_: mvtsf.data.dataset.MyDataset
-
-#    val:
-#      - _target_: mvtsf.data.dataset.MyDataset
-
-    test:
-      - _target_: mvtsf.data.dataset.MyDataset
+  dataset:
+    reader:
+      _target_: rul_datasets.reader.CmapssReader
+      fd: 1
+      window_size: 30
+      max_rul: 125
+    batch_size: 32
+    num_features: 14
 
   gpus: ${train.trainer.gpus}
 
@@ -23,11 +22,8 @@ data:
     val: 16
     test: 16
 
-  # example
-  val_percentage: 0.1
-
 module:
-  _target_: mvtsf.pl_modules.pl_module.MyLightningModule
+  _target_: mvtsf.pl_modules.pl_module.PLModule
 
   optimizer:
     #  Adam-oriented deep learning
