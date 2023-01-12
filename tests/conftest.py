@@ -55,7 +55,7 @@ def cfg_simple_train(cfg: DictConfig) -> DictConfig:
     cfg.core.tags = ["testing"]
 
     # Disable gpus
-    cfg.train.trainer.gpus = 0
+    cfg.train.trainer.accelerator = 'cpu'
 
     # Disable logger
     cfg.train.logging.logger.mode = "disabled"
@@ -65,9 +65,9 @@ def cfg_simple_train(cfg: DictConfig) -> DictConfig:
     cfg.train.logging.upload.run_files = False
 
     # Disable multiple workers in test training
-    cfg.nn.data.num_workers.train = 0
-    cfg.nn.data.num_workers.val = 0
-    cfg.nn.data.num_workers.test = 0
+    # cfg.nn.data.num_workers.train = 0
+    # cfg.nn.data.num_workers.val = 0
+    # cfg.nn.data.num_workers.test = 0
 
     # Minimize the amount of work in test training
     cfg.train.trainer.max_steps = TRAIN_MAX_NSTEPS

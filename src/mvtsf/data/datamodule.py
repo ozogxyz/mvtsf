@@ -1,14 +1,14 @@
+from cmath import log
 import logging
 from functools import cached_property
 from pathlib import Path
-from typing import List, Mapping, Optional, Union
+from typing import Mapping
 
 import hydra
 import omegaconf
 import pytorch_lightning as pl
 from omegaconf import DictConfig
 from rul_datasets.core import RulDataModule
-from rul_datasets.reader.cmapss import CmapssReader
 
 from nn_core.common import PROJECT_ROOT
 
@@ -81,16 +81,15 @@ class CMAPSSDataModule(RulDataModule):
     def __init__(
         self,
         dataset: DictConfig,
-        gpus: DictConfig,
-        num_workers: DictConfig,
         batch_size: DictConfig,
-
+        num_features: DictConfig,
     ):
+        print(omegaconf.OmegaConf.to_yaml(dataset))
         reader = hydra.utils.instantiate(dataset.reader)
-        self.num_features = dataset.num_features
-        batch_size = dataset.batch_size
+        self.num_features = num_features
+        batch_size = batch_size
         super().__init__(reader=reader, batch_size=batch_size)  # type: ignore
-
+        self.save_hyperparameters(logger=False)
     @cached_property
     def metadata(self) -> MetaData:
         """Data information to be fed to the Lightning Module as parameter.

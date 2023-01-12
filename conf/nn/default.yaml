@@ -7,20 +7,8 @@ data:
       fd: 1
       window_size: 30
       max_rul: 125
-    batch_size: 32
-    num_features: 14
-
-  gpus: ${train.trainer.gpus}
-
-  num_workers:
-    train: 8
-    val: 4
-    test: 4
-
-  batch_size:
-    train: 32
-    val: 16
-    test: 16
+  batch_size: 32
+  num_features: 14
 
 module:
   _target_: mvtsf.pl_modules.pl_module.PLModule
